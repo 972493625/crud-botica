@@ -1,32 +1,31 @@
-//frontend\src\pages\RegistroVentasDiario.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function RegistroVentasDiario() {
-    const [ventasDiarias, setVentasDiarias] = useState([]);
+    const [productosVendidosHoy, setProductosVendidosHoy] = useState([]);
     const [error, setError] = useState(null);
     const [cargando, setCargando] = useState(true);
 
-    const cargarVentasDiarias = async () => {
+    const cargarProductosVendidosHoy = async () => {
         setCargando(true);
         setError(null);
         try {
-            const response = await axios.get('http://localhost:3000/api/ventas/diarias'); // Ajusta la ruta de tu API
-            setVentasDiarias(response.data);
+            const response = await axios.get('http://localhost:3000/api/ventas/diarias');
+            setProductosVendidosHoy(response.data);
             setCargando(false);
         } catch (error) {
-            console.error('Error al cargar las ventas diarias:', error);
-            setError('Error al cargar las ventas diarias ❌');
+            console.error('Error al cargar los productos vendidos hoy:', error);
+            setError('Error al cargar los productos vendidos hoy ❌');
             setCargando(false);
         }
     };
 
     useEffect(() => {
-        cargarVentasDiarias();
+        cargarProductosVendidosHoy();
     }, []);
 
     if (cargando) {
-        return <p>Cargando ventas del día...</p>;
+        return <p>Cargando productos vendidos hoy...</p>;
     }
 
     if (error) {
@@ -34,27 +33,23 @@ function RegistroVentasDiario() {
     }
 
     return (
-        <div className="registro-ventas-diarias">
-            <h2>Ventas del Día</h2>
-            {ventasDiarias.length === 0 ? (
-                <p>No hay ventas registradas hoy.</p>
+        <div>
+            <h3>Lista de Productos Vendidos Hoy</h3>
+            {productosVendidosHoy.length === 0 ? (
+                <p>No se han vendido productos hoy.</p>
             ) : (
-                <table className="tabla-ventas-diarias">
+                <table className="table">
                     <thead>
                         <tr>
-                            <th>ID Venta</th>
-                            <th>Fecha y Hora</th>
-                            <th>Total</th>
-                            {/* Opcional: <th>Acciones</th> */}
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad Vendida</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {ventasDiarias.map(venta => (
-                            <tr key={venta.id}>
-                                <td>{venta.id}</td>
-                                <td>{new Date(venta.fecha_venta).toLocaleString('es-PE')}</td>
-                                <td>S/. {parseFloat(venta.total_venta).toFixed(2)}</td>
-                                {/* Opcional: <td><button className="btn-ver-boleta">Ver</button></td> */}
+                        {productosVendidosHoy.map((venta) => (
+                            <tr key={venta.nombre_producto}>
+                                <td>{venta.nombre_producto}</td>
+                                <td>{venta.cantidad_vendida}</td>
                             </tr>
                         ))}
                     </tbody>

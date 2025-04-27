@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome, FaBoxes, FaCashRegister } from 'react-icons/fa';
-
+///AQUIO
 const Navbar = () => {
   return (
     <nav style={styles.nav}>
-      <h1 style={styles.title}>💊 Botica Nova Salud</h1>
+      <h1 style={styles.title}>💊 Botica vida luz</h1>
       <ul style={styles.navLinks}>
         <li>
           <Link to="/" style={styles.link}>
