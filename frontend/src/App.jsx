@@ -1,14 +1,20 @@
-// src/App.jsx
 import React from 'react';
-import ProductList from './components/ProductList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import InventarioPage from './pages/InventarioPage';
+import VentasPage from './pages/VentasPage';
 
 function App() {
   return (
-    <div>
-      <h1>Sistema de Gestión de Botica "Nova Salud"</h1>
-      <ProductList />
-      {/* Aquí irán los demás componentes */}
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/inventario" element={<InventarioPage />} />
+        <Route path="/ventas" element={<VentasPage />} />
+      </Routes>
+    </Router>
   );
 }
 
