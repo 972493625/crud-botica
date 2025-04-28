@@ -1,5 +1,5 @@
 // models/producto.js
-const db = require('../models/db.js'); // Importa la conexión a la base de datos desde db.js
+const db = require('../models/db.js'); 
 
 const Producto = {
   getAll: (callback) => {

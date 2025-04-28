@@ -1,11 +1,11 @@
+// ProductoTable.jsx
 import React from 'react';
 
-const ProductoTable = ({ productos, onEdit, onDelete }) => {
+function ProductoTable({ productos, eliminarProducto, cargarProductoEditar }) {
   return (
-    <table style={styles.table}>
+    <table className="table">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Nombre</th>
           <th>Precio</th>
           <th>Stock</th>
@@ -15,27 +15,28 @@ const ProductoTable = ({ productos, onEdit, onDelete }) => {
       <tbody>
         {productos.map((producto) => (
           <tr key={producto.id}>
-            <td>{producto.id}</td>
             <td>{producto.nombre}</td>
-            <td>{producto.precio}</td>
+            <td>S/. {producto.precio}</td>
             <td>{producto.stock}</td>
             <td>
-              <button onClick={() => onEdit(producto)}>Editar</button>
-              <button onClick={() => onDelete(producto.id)}>Eliminar</button>
+              <button
+                className="btn btn-warning btn-sm me-2"
+                onClick={() => cargarProductoEditar(producto)}
+              >
+                Editar
+              </button>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => eliminarProducto(producto.id)}
+              >
+                Eliminar
+              </button>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
   );
-};
-
-const styles = {
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginTop: '20px',
-  },
-};
+}
 
 export default ProductoTable;

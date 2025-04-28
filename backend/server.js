@@ -25,10 +25,9 @@ db.connect((err) => {
 
 const productRoutes = require('./routes/productRoutes');
 
-//  Usa app.use() para montar el router
-app.use('/api/products', productRoutes);  //  <--  ¡Este es el cambio clave!
+app.use('/api/products', productRoutes);  
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(` Servidor corriendo en http://localhost:${PORT}`);
 });
