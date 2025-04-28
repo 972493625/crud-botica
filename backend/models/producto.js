@@ -11,15 +11,52 @@ const Producto = {
   },
 
   create: (producto, callback) => {
-    db.query('INSERT INTO productos (nombre, precio, stock) VALUES (?, ?, ?)',
-      [producto.nombre, producto.precio, producto.stock],
-      callback);
+    const sql = `
+      INSERT INTO productos 
+      (nombre, codigo_barras, precio_compra, precio_venta, stock, stock_minimo, fecha_caducidad, categoria_id, proveedor_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+      producto.nombre,
+      producto.codigo_barras,
+      producto.precio_compra,
+      producto.precio_venta,
+      producto.stock,
+      producto.stock_minimo,
+      producto.fecha_caducidad,
+      producto.categoria_id,
+      producto.proveedor_id,
+    ];
+    db.query(sql, values, callback);
   },
 
   update: (id, producto, callback) => {
-    db.query('UPDATE productos SET nombre = ?, precio = ?, stock = ? WHERE id = ?',
-      [producto.nombre, producto.precio, producto.stock, id],
-      callback);
+    const sql = `
+      UPDATE productos SET 
+        nombre = ?, 
+        codigo_barras = ?, 
+        precio_compra = ?, 
+        precio_venta = ?, 
+        stock = ?, 
+        stock_minimo = ?, 
+        fecha_caducidad = ?, 
+        categoria_id = ?, 
+        proveedor_id = ?
+      WHERE id = ?
+    `;
+    const values = [
+      producto.nombre,
+      producto.codigo_barras,
+      producto.precio_compra,
+      producto.precio_venta,
+      producto.stock,
+      producto.stock_minimo,
+      producto.fecha_caducidad,
+      producto.categoria_id,
+      producto.proveedor_id,
+      id
+    ];
+    db.query(sql, values, callback);
   },
 
   delete: (id, callback) => {

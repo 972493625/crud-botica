@@ -7,7 +7,7 @@ function ProductoTable({ productos, eliminarProducto, cargarProductoEditar }) {
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Precio</th>
+          <th>Precio Venta</th>
           <th>Stock</th>
           <th>Acciones</th>
         </tr>
@@ -16,7 +16,7 @@ function ProductoTable({ productos, eliminarProducto, cargarProductoEditar }) {
         {productos.map((producto) => (
           <tr key={producto.id}>
             <td>{producto.nombre}</td>
-            <td>S/. {producto.precio}</td>
+            <td>S/. {producto.precio_venta}</td>
             <td>{producto.stock}</td>
             <td>
               <button

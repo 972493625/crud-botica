@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const InventarioPage = () => {
   const [productos, setProductos] = useState([]);
+  const [productoEditar, setProductoEditar] = useState(null);
 
   const fetchProductos = async () => {
     try {
@@ -15,6 +16,25 @@ const InventarioPage = () => {
     }
   };
 
+  const cargarProductoEditar = (producto) => {
+    setProductoEditar(producto);
+  };
+
+  const limpiarProductoEditar = () => {
+    setProductoEditar(null);
+  };
+
+  const eliminarProducto = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/products/${id}`);
+      alert('Producto eliminado ✅');
+      fetchProductos();
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+      alert('Error al eliminar producto ❌');
+    }
+  };
+
   useEffect(() => {
     fetchProductos();
   }, []);
@@ -22,8 +42,16 @@ const InventarioPage = () => {
   return (
     <div className="container">
       <h1>Inventario de Productos</h1>
-      <ProductoForm fetchProductos={fetchProductos} />
-      <ProductoTable productos={productos} fetchProductos={fetchProductos} />
+      <ProductoForm
+        cargarProductos={fetchProductos}
+        productoEditar={productoEditar}
+        limpiarProductoEditar={limpiarProductoEditar}
+      />
+      <ProductoTable
+        productos={productos}
+        eliminarProducto={eliminarProducto}
+        cargarProductoEditar={cargarProductoEditar}
+      />
     </div>
   );
 };
