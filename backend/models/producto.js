@@ -56,6 +56,7 @@ const Producto = {
       producto.proveedor_id,
       id
     ];
+    console.log("Consulta UPDATE:", sql, values); // <---- LOG PARA DEPURACIÓN
     db.query(sql, values, callback);
   },
 

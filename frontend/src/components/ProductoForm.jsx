@@ -49,11 +49,14 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
         precio_venta: productoEditar.precio_venta || '',
         stock: productoEditar.stock || '',
         stock_minimo: productoEditar.stock_minimo || '10',
-        fecha_caducidad: productoEditar.fecha_caducidad || '',
+        fecha_caducidad: productoEditar.fecha_caducidad ? productoEditar.fecha_caducidad.substring(0, 10) : '', // Formatear fecha al cargar para editar
         categoria_id: productoEditar.categoria_id || '',
         proveedor_id: productoEditar.proveedor_id || '',
         id: productoEditar.id // muy importante para saber si es edición
       });
+    } else {
+      // Resetear la fecha cuando se va a crear un nuevo producto
+      setProducto(prevState => ({ ...prevState, fecha_caducidad: '' }));
     }
   }, [productoEditar]);
 
@@ -67,11 +70,16 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const productoToSend = { ...producto };
+      if (productoToSend.fecha_caducidad) {
+        productoToSend.fecha_caducidad = productoToSend.fecha_caducidad.substring(0, 10); // Extraer solo la parte YYYY-MM-DD
+      }
+
       if (producto.id) {
-        await axios.put(`http://localhost:3000/api/products/${producto.id}`, producto);
+        await axios.put(`http://localhost:3000/api/products/${producto.id}`, productoToSend);
         alert('Producto actualizado exitosamente ✅');
       } else {
-        await axios.post('http://localhost:3000/api/products', producto);
+        await axios.post('http://localhost:3000/api/products', productoToSend);
         alert('Producto registrado exitosamente ✅');
       }
       // Resetear formulario
