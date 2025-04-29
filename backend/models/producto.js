@@ -1,5 +1,5 @@
-// models/producto.js
-const db = require('../models/db.js'); 
+// backend/models/producto.js
+const db = require('../models/db.js');
 
 const Producto = {
   getAll: (callback) => {
@@ -12,13 +12,13 @@ const Producto = {
 
   create: (producto, callback) => {
     const sql = `
-      INSERT INTO productos 
-      (nombre, codigo_barras, precio_compra, precio_venta, stock, stock_minimo, fecha_caducidad, categoria_id, proveedor_id)
+      INSERT INTO productos
+      (nombre, codigo, precio_compra, precio_venta, stock, stock_minimo, fecha_caducidad, categoria_id, proveedor_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
       producto.nombre,
-      producto.codigo_barras,
+      producto.codigo,
       producto.precio_compra,
       producto.precio_venta,
       producto.stock,
@@ -32,21 +32,21 @@ const Producto = {
 
   update: (id, producto, callback) => {
     const sql = `
-      UPDATE productos SET 
-        nombre = ?, 
-        codigo_barras = ?, 
-        precio_compra = ?, 
-        precio_venta = ?, 
-        stock = ?, 
-        stock_minimo = ?, 
-        fecha_caducidad = ?, 
-        categoria_id = ?, 
+      UPDATE productos SET
+        nombre = ?,
+        codigo = ?,
+        precio_compra = ?,
+        precio_venta = ?,
+        stock = ?,
+        stock_minimo = ?,
+        fecha_caducidad = ?,
+        categoria_id = ?,
         proveedor_id = ?
       WHERE id = ?
     `;
     const values = [
       producto.nombre,
-      producto.codigo_barras,
+      producto.codigo,
       producto.precio_compra,
       producto.precio_venta,
       producto.stock,

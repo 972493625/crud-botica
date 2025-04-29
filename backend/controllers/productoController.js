@@ -27,8 +27,10 @@ const productoController = {
   },
 
   createProducto: (req, res) => {
+    console.log("Datos recibidos para crear producto:", req.body);
     Producto.create(req.body, (err, result) => {
       if (err) {
+        console.error("Error al crear producto en la base de datos:", err);
         res.status(500).send(err);
       } else {
         res.status(201).json({ message: 'Producto creado exitosamente', id: result.insertId });

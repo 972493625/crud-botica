@@ -4,11 +4,11 @@ import axios from 'axios';
 function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }) {
   const [producto, setProducto] = useState({
     nombre: '',
-    codigo_barras: '',
+    codigo: '', // <---- CAMBIO AQUÍ
     precio_compra: '',
     precio_venta: '',
     stock: '',
-    stock_minimo: '10',  // Valor por defecto
+    stock_minimo: '10', // Valor por defecto
     fecha_caducidad: '',
     categoria_id: '',
     proveedor_id: '',
@@ -23,8 +23,11 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
     const cargarDatosMaestros = async () => {
       try {
         const categoriasRes = await axios.get('http://localhost:3000/api/categorias');
-        const proveedoresRes = await axios.get('http://localhost:3000/api/proveedores');
+        console.log("Respuesta de categorías:", categoriasRes); // <--- LOG
+        console.log("Datos de categorías recibidos:", categoriasRes.data); // <--- LOG
         setCategorias(categoriasRes.data);
+        console.log("Estado de categorías:", categorias); // <--- LOG
+        const proveedoresRes = await axios.get('http://localhost:3000/api/proveedores');
         setProveedores(proveedoresRes.data);
         setLoading(false); // Ya cargó
       } catch (error) {
@@ -41,7 +44,7 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
     if (productoEditar) {
       setProducto({
         nombre: productoEditar.nombre || '',
-        codigo_barras: productoEditar.codigo_barras || '',
+        codigo: productoEditar.codigo || '', // <---- CAMBIO AQUÍ
         precio_compra: productoEditar.precio_compra || '',
         precio_venta: productoEditar.precio_venta || '',
         stock: productoEditar.stock || '',
@@ -74,7 +77,7 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
       // Resetear formulario
       setProducto({
         nombre: '',
-        codigo_barras: '',
+        codigo: '', // <---- CAMBIO AQUÍ
         precio_compra: '',
         precio_venta: '',
         stock: '',
@@ -90,6 +93,7 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
       alert('Error al guardar el producto ❌. Detalles: ' + error.message);
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
@@ -109,8 +113,8 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
         <input
           type="text"
           className="form-control"
-          name="codigo_barras"
-          value={producto.codigo_barras}
+          name="codigo" // <---- CAMBIO AQUÍ
+          value={producto.codigo}
           onChange={handleChange}
           required
         />
@@ -185,11 +189,14 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
           required
         >
           <option value="">Seleccione Categoría</option>
-          {categorias.map((categoria) => (
-            <option key={categoria.id} value={categoria.id}>
-              {categoria.nombre}
-            </option>
-          ))}
+          {categorias.map((categoria) => {
+            console.log("Categoría en map:", categoria); // <--- LOG
+            return (
+              <option key={categoria.id} value={categoria.id}>
+                {categoria.nombre}
+              </option>
+            );
+          })}
         </select>
       </div>
 

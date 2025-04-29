@@ -3,15 +3,15 @@ const express = require('express');
 const router = express.Router();
 const productoController = require('../controllers/productoController.js');
 
-// Rutas para productos
-router.get('/api/products', productoController.getAllProductos);
-router.get('/api/products/:id', productoController.getProductoById);
-router.post('/api/products', productoController.createProducto);
-router.put('/api/products/:id', productoController.updateProducto);
-router.delete('/api/products/:id', productoController.deleteProducto);
+// Rutas para productos (ya están bien con /api/products)
+router.get('/products', productoController.getAllProductos);
+router.get('/products/:id', productoController.getProductoById);
+router.post('/products', productoController.createProducto);
+router.put('/products/:id', productoController.updateProducto);
+router.delete('/products/:id', productoController.deleteProducto);
 
-// Nuevas rutas para categorías y proveedores CON el prefijo /api
-router.get('/api/categorias', productoController.getAllCategorias);
-router.get('/api/proveedores', productoController.getAllProveedores);
+// Rutas para categorías y proveedores AHORA CON el prefijo /api
+router.get('/categorias', productoController.getAllCategorias);
+router.get('/proveedores', productoController.getAllProveedores);
 
 module.exports = router;
