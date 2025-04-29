@@ -165,7 +165,7 @@ function VentasPage() {
 
       <div className="mt-3">
         <h2>Opciones de Pago</h2>
-        {/* Aquí podríamos agregar los campos para el método de pago, monto recibido, etc. */}
+        {/* Aquí podríamos agregar los campos para el método de pago, monto recibido, */}
         <button className="btn btn-primary" onClick={registrarVenta}>
           Registrar Venta
         </button>
