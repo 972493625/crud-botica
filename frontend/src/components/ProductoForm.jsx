@@ -90,11 +90,6 @@ function ProductoForm({ cargarProductos, productoEditar, limpiarProductoEditar }
       alert('Error al guardar el producto ❌. Detalles: ' + error.message);
     }
   };
-
-  if (loading) {
-    return <div className="text-center my-4">Cargando categorías y proveedores...</div>;
-  }
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">

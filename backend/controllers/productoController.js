@@ -1,5 +1,7 @@
 // backend/controllers/productoController.js
 const Producto = require('../models/producto.js');
+const Categoria = require('../models/categoria.js'); // Importa el modelo de Categoría (si existe)
+const Proveedor = require('../models/proveedor.js'); // Importa el modelo de Proveedor (si existe)
 
 const productoController = {
   getAllProductos: (req, res) => {
@@ -19,7 +21,7 @@ const productoController = {
       } else if (result.length === 0) {
         res.status(404).send({ message: 'Producto no encontrado' });
       } else {
-        res.json(result[0]);  // 👈 devolvemos el primer elemento
+        res.json(result[0]);
       }
     });
   },
@@ -50,6 +52,27 @@ const productoController = {
         res.status(500).send(err);
       } else {
         res.json({ message: 'Producto eliminado exitosamente' });
+      }
+    });
+  },
+
+  // Nuevas funciones para obtener categorías y proveedores
+  getAllCategorias: (req, res) => {
+    Categoria.getAll((err, categorias) => { // Asumiendo que tienes un modelo Categoria con un método getAll
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(categorias);
+      }
+    });
+  },
+
+  getAllProveedores: (req, res) => {
+    Proveedor.getAll((err, proveedores) => { // Asumiendo que tienes un modelo Proveedor con un método getAll
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(proveedores);
       }
     });
   },
