@@ -1,7 +1,6 @@
-// backend/controllers/productoController.js
 const Producto = require('../models/producto.js');
-const Categoria = require('../models/categoria.js'); // Importa el modelo de Categoría (si existe)
-const Proveedor = require('../models/proveedor.js'); // Importa el modelo de Proveedor (si existe)
+const Categoria = require('../models/categoria.js');
+const Proveedor = require('../models/proveedor.js');
 
 const productoController = {
   getAllProductos: (req, res) => {
@@ -58,9 +57,30 @@ const productoController = {
     });
   },
 
-  // Nuevas funciones para obtener categorías y proveedores
+  buscarProductos: (req, res) => {
+    const termino = req.query.q;
+    if (termino) {
+      Producto.buscar(termino, (err, productos) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.json(productos);
+        }
+      });
+    } else {
+      // Si no hay término de búsqueda, devolvemos todos los productos (comportamiento anterior de /api/products)
+      Producto.getAll((err, productos) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.json(productos);
+        }
+      });
+    }
+  },
+
   getAllCategorias: (req, res) => {
-    Categoria.getAll((err, categorias) => { // Asumiendo que tienes un modelo Categoria con un método getAll
+    Categoria.getAll((err, categorias) => {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -70,7 +90,7 @@ const productoController = {
   },
 
   getAllProveedores: (req, res) => {
-    Proveedor.getAll((err, proveedores) => { // Asumiendo que tienes un modelo Proveedor con un método getAll
+    Proveedor.getAll((err, proveedores) => {
       if (err) {
         res.status(500).send(err);
       } else {

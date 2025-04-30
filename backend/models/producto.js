@@ -1,4 +1,3 @@
-// backend/models/producto.js
 const db = require('../models/db.js');
 
 const Producto = {
@@ -56,13 +55,22 @@ const Producto = {
       producto.proveedor_id,
       id
     ];
-    console.log("Consulta UPDATE:", sql, values); // <---- LOG PARA DEPURACIÓN
+    console.log("Consulta UPDATE:", sql, values);
     db.query(sql, values, callback);
   },
 
   delete: (id, callback) => {
     db.query('DELETE FROM productos WHERE id = ?', [id], callback);
-  }
+  },
+
+  buscar: (termino, callback) => {
+    const sql = `
+      SELECT * FROM productos
+      WHERE nombre LIKE ? OR codigo LIKE ?
+    `;
+    const values = [`%${termino}%`, `%${termino}%`];
+    db.query(sql, values, callback);
+  },
 };
 
 module.exports = Producto;

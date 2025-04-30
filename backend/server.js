@@ -51,12 +51,17 @@ app.use((req, res, next) => {
 // #######################################################################
 
 const productRoutes = require('./routes/productRoutes');
+const ventaRoutes = require('./routes/ventaRoutes'); // <---- Importa las rutas de venta
 
 // Monta todas las rutas definidas en productRoutes bajo el prefijo /api
 // Esto significa que todas las rutas en productRoutes (por ejemplo, /products,
 // /products/:id, /categorias, /proveedores) ahora estarán accesibles bajo /api/products,
 // /api/products/:id, /api/categorias, /api/proveedores, respectivamente.
 app.use('/api', productRoutes);
+
+// Monta las rutas de venta bajo el prefijo /api
+// Esto permite que la ruta /api/ventas/registrar esté disponible
+app.use('/api', ventaRoutes);
 
 // #######################################################################
 // ### Inicio del Servidor ################################################
